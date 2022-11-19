@@ -16,11 +16,19 @@ app.use(express.json());
 // so we can encode data in the url too
 app.use(bodyParser.urlencoded({extended: false}));
 
-// home page -> /
-app.get('/', async (request, response) => {
-    response.send("Suh dude!");
-    console.log("Traffic received!");
-});
+// Create function to connect DB
+const db_Connect = async() => {
+    try {
+        await mongoose.connect(process.env.DATABASE_URL);
+        console.log("DB Connected!");
+    }
+    catch(error) {
+        console.log(error);
+    }
+}
+
+// Connect DB
+db_Connect();
 
 app.listen(PORT, () => {
     console.log(`Server running on PORT -> ${PORT}`);
