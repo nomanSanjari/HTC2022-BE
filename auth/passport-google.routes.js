@@ -40,7 +40,7 @@ router.get('/api/auth/google/login/failure', (request, response) => {
     response.end();
 });
 
-
+// NOT COMPLETE
 // ROUTE -> GOOGLE LOGOUT 
 router.get('/api/auth/google/logout');
 

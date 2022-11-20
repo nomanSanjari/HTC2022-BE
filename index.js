@@ -5,7 +5,7 @@ const express = require('express');
 const app = express();
 
 // IMPORTS -> AUTHENTICATION
-const passportSetupGoogle = require('./auth/passport-google.setup');
+const passportSetupGoogle = require('./auth/passport-google.Setup');
 
 // IMPORTS -> DATABASE
 const mongoose = require('mongoose');
@@ -16,7 +16,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
 // IMPORTS -> ROUTES
-const authenticationRoutes = require('./auth/passport-google.routes');
+const authenticationRoutes = require('./auth/passport-google.Routes');
 
 
 // MIDDLEWARE -> UTILITIES
