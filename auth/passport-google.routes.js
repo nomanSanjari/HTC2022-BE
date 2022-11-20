@@ -37,25 +37,29 @@ router.get('/api/auth/google/callback',
     passport.authenticate('google', { 
         failureRedirect: '/api/auth/google/login/failure'
     }), async (request, response) => {
-        response.sendStatus(200);
-        response.send(request.user);
-        response.send("Successfully logged in!");
+        response.status(200);
+        response.write("Successfully logged in!");
+        response.write(request.session.id);
+        response.send();
     }
 );
 
 // COMPLETE
 // ROUTE -> GOOGLE LOGIN -> LOGIN FAILURE
 router.get('/api/auth/google/login/failure', (request, response) => {
-    response.sendStatus(400);
-    response.send("Failure to login...");
-    response.send("Redirecting to login page...");
+    response.status(400);
     response.redirect('/api/auth/google/login');
     response.end();
 });
 
-// NOT COMPLETE
+// COMPLETE
 // ROUTE -> GOOGLE LOGOUT 
-router.get('/api/auth/google/logout');
+router.get('/api/auth/google/logout', (request, response) => {
+    request.logout((err) => {
+        response.redirect('/');
+    });
+    
+});
 
 // export the router object
 module.exports = router;
