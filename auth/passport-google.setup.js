@@ -8,6 +8,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 // User model
 const User = require('../models/User.Model');
 
+// Google Strategy set up for authentication
 passport.use(
     new GoogleStrategy(
         {

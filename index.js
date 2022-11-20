@@ -10,6 +10,10 @@ const passportSetupGoogle = require('./auth/passport-google.Setup');
 // IMPORTS -> DATABASE
 const mongoose = require('mongoose');
 
+// IMPORTS -> SESSION
+const expressSession = require('express-session');
+const cookieSession = require('cookie-session');
+
 // IMPORTS -> DATA HANDLING
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -17,6 +21,7 @@ const cors = require('cors');
 
 // IMPORTS -> ROUTES
 const authenticationRoutes = require('./auth/passport-google.Routes');
+const passport = require('passport');
 
 
 // MIDDLEWARE -> UTILITIES
