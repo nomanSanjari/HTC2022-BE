@@ -3,16 +3,15 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const passport = require('passport');
-const passportSetupGoogle = require('./auth/passport-google.Setup');
+const passportSetupGoogle = require('./auth/Passport.Setup');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo');
 const expressSession = require('express-session');
-const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
-const authenticationRoutes = require('./auth/passport-google.Routes');
+const authnRoutes = require('./auth/Passport.Routes');
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -21,7 +20,7 @@ app.use(
     expressSession({
         secret: "amar nunu choto",
         store: MongoStore.create({
-            mongoUrl: process.env.DATABASE_URL
+            mongoUrl: 'mongodb+srv://nomanSanjari:12345678ftw@cluster0.ptvyphi.mongodb.net/App?retryWrites=true&w=majority'
         }),
         resave: false,
         saveUnitialized: true,
@@ -34,12 +33,12 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(authenticationRoutes);
+app.use(authnRoutes);
 
 // Async function to connect to MongoDB
-const db_Connect = async () => {
+const db_Connect = () => {
     try {
-        await mongoose.connect(process.env.DATABASE_URL);
+        mongoose.connect('mongodb+srv://nomanSanjari:12345678ftw@cluster0.ptvyphi.mongodb.net/App?retryWrites=true&w=majority');
         console.log("DB Connected!");
     }
     catch (error) {
@@ -50,8 +49,8 @@ const db_Connect = async () => {
 // Connect DB
 db_Connect();
 
-app.listen(process.env.PORT || 3000, () => {
-    console.log(`Server running on PORT -> ${process.env.PORT}`);
+app.listen(8000, () => {
+    console.log('Server running on PORT -> 8000');
 });
 
 app.get('/', (request, response) => {
