@@ -1,65 +1,45 @@
 require('dotenv').config();
 
+const { request, response } = require('express');
 const express = require('express');
+const app = express();
 const router = express.Router();
 
 const passport = require('passport');
-
-// ROUTES -> AUTHENTICATION
-
-// COMPLETE
-// ROUTE -> GOOGLE LOGIN -> AUTHENTICATION
-
-/*
-NOTES FOR ME
-* access_type = offline -> service returns a refresh token
-* prompt = consent -> service returns a refresh token everytime
-* prompt = select_account -> service allows user to select account to log in with 
-*/
+const Attribute = require('../models/Attribute.Model');
+const User = require('../models/User.Model');
 
 router.get('/api/auth/google/login', 
     passport.authenticate('google', {
         scope: ['profile', 'email'],
         prompt: ['consent']
-    }, async (request, response) => {
+    }, async (req, res) => {
         response.sendStatus(200);
         response.end();
     })
 );
 
-/* 
-NOTES FOR ME
-* this is where the authentication cycle ends
-*/
-// COMPLETE
-// ROUTE -> GOOGLE LOGIN -> CALLBACK
 router.get('/api/auth/google/callback', 
     passport.authenticate('google', { 
-        failureRedirect: '/api/auth/google/login/failure'
-    }), async (request, response) => {
-        response.status(200);
-        response.write("Successfully logged in!");
-        response.write(request.session.id);
-        response.send();
+        failureRedirect: '/api/auth/google/login/'
+    }), async (req, res) => {
+        
+        User.findById(req.session.passport['user']).then((currentUser) => {
+            if(currentUser.initialized === false) {
+                res.redirect('/');
+            }
+            else {
+                // go to main view
+            }
+        })
     }
 );
 
-// COMPLETE
-// ROUTE -> GOOGLE LOGIN -> LOGIN FAILURE
-router.get('/api/auth/google/login/failure', (request, response) => {
-    response.status(400);
-    response.redirect('/api/auth/google/login');
-    response.end();
-});
-
-// COMPLETE
-// ROUTE -> GOOGLE LOGOUT 
-router.get('/api/auth/google/logout', (request, response) => {
+router.get('/api/auth/google/logout', (req, res) => {
     request.logout((err) => {
         response.redirect('/');
     });
     
 });
 
-// export the router object
 module.exports = router;

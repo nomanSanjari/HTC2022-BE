@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// defining the Attributes schema
 const attributesSchema = new Schema({
     userID: {
         type: String,
@@ -33,8 +32,6 @@ const attributesSchema = new Schema({
     }
 });
 
-// using the characteristicsSchema to define the Characteristics model
 const Attribute = mongoose.model('attributes', attributesSchema);
 
-// exporting the Characteristic model
 module.exports = Attribute;

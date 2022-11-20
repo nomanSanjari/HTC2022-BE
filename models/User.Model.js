@@ -18,11 +18,17 @@ const userSchema = new Schema({
     googleID: {
         type: String,
         require: true
+    },
+    initialized: {
+        type: Boolean,
+        require: true
+    },
+    BMR: {
+        type: Number,
+        require: true
     }
 });
 
-// using the userSchema to define the User model
 const User = mongoose.model('users', userSchema);
 
-// exporting the User model
 module.exports = User;

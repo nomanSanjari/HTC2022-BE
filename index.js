@@ -12,6 +12,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
 const authnRoutes = require('./auth/Passport.Routes');
+const attributeRoutes = require('./routes/Attribute.Routes')
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -26,7 +27,7 @@ app.use(
         saveUnitialized: true,
         cookie: {
             maxAge: 1 * 60 * 60 * 1000,
-            secure: false // since we don't have an SSL cert...yet
+            secure: false
         }
     })
 );
@@ -34,8 +35,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(authnRoutes);
+app.use(attributeRoutes)
 
-// Async function to connect to MongoDB
 const db_Connect = () => {
     try {
         mongoose.connect('mongodb+srv://nomanSanjari:12345678ftw@cluster0.ptvyphi.mongodb.net/App?retryWrites=true&w=majority');
@@ -46,13 +47,15 @@ const db_Connect = () => {
     }
 }
 
-// Connect DB
 db_Connect();
 
 app.listen(8000, () => {
     console.log('Server running on PORT -> 8000');
 });
 
-app.get('/', (request, response) => {
-    response.send(request.session.id);
+app.get('/', (req, res) => {
+    console.log(typeof(req.session.passport['user']))
+    res.json({
+        'ID': req.session.passport['user']
+    });
 })
