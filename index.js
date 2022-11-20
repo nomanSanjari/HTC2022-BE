@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors({ origin: true, credentials: true }));
 app.use(
     expressSession({
-        secret: "amar nunu choto",
+        secret: "skinny er nunu boro",
         store: MongoStore.create({
             mongoUrl: 'mongodb+srv://nomanSanjari:12345678ftw@cluster0.ptvyphi.mongodb.net/App?retryWrites=true&w=majority'
         }),

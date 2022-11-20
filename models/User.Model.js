@@ -18,14 +18,6 @@ const userSchema = new Schema({
     googleID: {
         type: String,
         require: true
-    },
-    initialized: {
-        type: Boolean,
-        require: true
-    },
-    BMR: {
-        type: Number,
-        require: true
     }
 });
 
